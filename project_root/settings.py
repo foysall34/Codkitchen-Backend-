@@ -1,4 +1,8 @@
 
+import os
+
+from decouple import config
+from dotenv import load_dotenv 
 
 from pathlib import Path
 
@@ -15,8 +19,8 @@ SECRET_KEY = 'django-insecure-$5h3i2#$qg#58b1)j00cluqvel2&rp_e^fp**(8f&xyl)!$l71
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'https://*.ngrok-free.app']
 
 # Application definition
 
@@ -28,11 +32,18 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # app 
-    'myapp' ,
-
+    'calendy',
     # framework 
     'rest_framework',
 ]
+
+
+CALENDLY_PERSONAL_ACCESS_TOKEN = config("CALENDLY_PERSONAL_ACCESS_TOKEN")
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+
+print("Calendly Token: is found", CALENDLY_PERSONAL_ACCESS_TOKEN)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -97,6 +108,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
+
+
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)  
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
 
 LANGUAGE_CODE = 'en-us'
 

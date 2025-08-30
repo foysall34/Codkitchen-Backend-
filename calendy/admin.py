@@ -1,11 +1,9 @@
-
 from django.contrib import admin
 from .models import Appointment
 from .models import ContactMessage
 
 
 admin.site.register(ContactMessage)
-
 @admin.register(Appointment)
 class AppointmentAdmin(admin.ModelAdmin):
     list_display = ('invitee_name', 'invitee_email', 'start_time', 'is_approved')

@@ -1,6 +1,4 @@
-
 import os
-
 from decouple import config
 from dotenv import load_dotenv 
 
@@ -35,6 +33,7 @@ INSTALLED_APPS = [
     'calendy',
     # framework 
     'rest_framework',
+    'corsheaders',
 ]
 
 
@@ -42,18 +41,24 @@ CALENDLY_PERSONAL_ACCESS_TOKEN = config("CALENDLY_PERSONAL_ACCESS_TOKEN")
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
-
-print("Calendly Token: is found", CALENDLY_PERSONAL_ACCESS_TOKEN)
+print("Calendly Token: is found")
 
 MIDDLEWARE = [
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+# ]
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'project_root.urls'
 
@@ -109,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-
+# ---------------------------For email verification COde-----------------------------
 EMAIL_BACKEND = config('EMAIL_BACKEND')
 EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)  

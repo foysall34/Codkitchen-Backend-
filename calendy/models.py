@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.core.mail import send_mail
 from django.conf import settings
@@ -37,11 +36,6 @@ class Appointment(models.Model):
         status = "Approved" if self.is_approved else "Pending"
         return f"Appointment with {self.invitee_name} - Status: {status}"
     
-
-
-
-
-
 
 
 class ContactMessage(models.Model):
